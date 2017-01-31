@@ -65,6 +65,11 @@ ENV UMPIRE_VERSION 0.5.3
 # Install umpire
 RUN pip2.7 install umpire==${UMPIRE_VERSION}
 
+#Install go
+RUN wget https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz -O /tmp/go1.7.4.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf /tmp/go1.7.4.linux-amd64.tar.gz
+RUN export PATH=$PATH:/usr/local/go/bin
+
 # Make sure anything/everything we put in the build user's home dir is owned correctly
 RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER
 
