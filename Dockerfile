@@ -4,17 +4,9 @@ MAINTAINER devops@signiant.com
 ENV BUILD_USER bldmgr
 ENV BUILD_USER_GROUP users
 
-
 # Set the timezone
 RUN unlink /etc/localtime
 RUN ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-
-# Install maven
-ENV MAVEN_VERSION 3.2.1
-RUN curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
-  && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
-  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
-ENV MAVEN_HOME /usr/share/maven
 
 # Install yum packages required for build node
 COPY yum-packages.list /tmp/yum.packages.list
@@ -25,18 +17,9 @@ RUN yum install -y -q `cat /tmp/yum.packages.list`
 # Install yum development tools
 RUN yum groupinstall -y -q "Development Tools"
 
-# Install jboss
-RUN wget http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA.zip/download -O /tmp/jboss-5.1.0.GA.zip
-RUN unzip -q /tmp/jboss-5.1.0.GA.zip -d /usr/local
-RUN rm -f /tmp/jboss-5.1.0.GA.zip
-
 # Install Compass
 RUN gem install json_pure
 RUN gem update --system
-RUN gem install compass
-
-# install phantomjs
-RUN npm install -g phantomjs
 
 # Install the latest version of git
 RUN cd /tmp && \
@@ -74,7 +57,6 @@ RUN wget https://github.com/Masterminds/glide/releases/download/v0.12.3/glide-v0
 RUN mkdir /tmp/glide-v0.12.3-linux-amd64
 RUN tar -C /tmp/glide-v0.12.3-linux-amd64 -xzf /tmp/glide-v0.12.3-linux-amd64.tar.gz
 RUN cp /tmp/glide-v0.12.3-linux-amd64/linux-amd64/glide /usr/local/bin/
-
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
 RUN chown -R $BUILD_USER:$BUILD_USER_GROUP /home/$BUILD_USER
