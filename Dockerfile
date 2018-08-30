@@ -49,7 +49,7 @@ ENV UMPIRE_VERSION 0.5.3
 RUN pip2.7 install umpire==${UMPIRE_VERSION}
 
 #Install go
-RUN yum install golang
+RUN yum install -y golang
 
 #Install glide
 RUN wget https://github.com/Masterminds/glide/releases/download/v0.12.3/glide-v0.12.3-linux-amd64.tar.gz -O /tmp/glide-v0.12.3-linux-amd64.tar.gz
