@@ -1,6 +1,8 @@
 FROM signiant/docker-jenkins-centos-base:centos7-java8
 MAINTAINER devops@signiant.com
 
+EXPOSE 2000-65535
+
 ENV BUILD_USER bldmgr
 ENV BUILD_USER_GROUP users
 
