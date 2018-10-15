@@ -4,6 +4,8 @@ MAINTAINER devops@signiant.com
 ENV BUILD_USER bldmgr
 ENV BUILD_USER_GROUP users
 
+EXPOSE 2000-65535
+
 # Set the timezone
 RUN unlink /etc/localtime
 RUN ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
