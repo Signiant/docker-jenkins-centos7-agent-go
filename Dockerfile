@@ -4,7 +4,8 @@ MAINTAINER devops@signiant.com
 ENV BUILD_USER bldmgr
 ENV BUILD_USER_GROUP users
 
-EXPOSE 2000-65535
+EXPOSE 8000
+EXPOSE 9000
 
 # Set the timezone
 RUN unlink /etc/localtime
