@@ -22,13 +22,18 @@ RUN yum groupinstall -y -q "Development Tools"
 
 # Install Compass
 RUN gem install json_pure
-RUN gem update --system
+RUN ruby --version
+RUN gem install "rubygems-update:<3.0.0" --no-document
+RUN update_rubygems
+RUN ruby --version
+RUN gem install rb-inotify -v 0.9.10
+RUN gem install compass
 
 # Install the latest version of git
 RUN cd /tmp && \
-    wget https://github.com/git/git/archive/v2.7.0.tar.gz && \
-    tar xvfz ./v2.7.0.tar.gz && \
-    cd git-2.7.0 && \
+    wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.gz && \
+    tar xvfz ./git-2.9.5.tar.gz && \
+    cd git-2.9.5 && \
     make configure && \
     ./configure --prefix=/usr && \
     make && \
@@ -51,8 +56,9 @@ ENV UMPIRE_VERSION 0.5.3
 # Install umpire
 RUN pip2.7 install umpire==${UMPIRE_VERSION}
 
-#Install go
-RUN yum install -y golang
+# Install golang 1.12
+RUN wget https://storage.googleapis.com/golang/go1.12.3.linux-amd64.tar.gz -O /tmp/go1.12.3.linux-amd64.tar.gz
+RUN sudo tar -C /usr/local -xzf /tmp/go1.12.3.linux-amd64.tar.gz
 
 #Install glide
 RUN wget https://github.com/Masterminds/glide/releases/download/v0.12.3/glide-v0.12.3-linux-amd64.tar.gz -O /tmp/glide-v0.12.3-linux-amd64.tar.gz
