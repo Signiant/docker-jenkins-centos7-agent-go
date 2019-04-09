@@ -1,9 +1,6 @@
 FROM signiant/docker-jenkins-centos-base:centos7-java8
 MAINTAINER devops@signiant.com
 
-EXPOSE 8000
-EXPOSE 9000
-
 ENV BUILD_USER bldmgr
 ENV BUILD_USER_GROUP users
 
@@ -37,6 +34,7 @@ RUN cd /tmp && \
     wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.9.5.tar.gz && \
     tar xvfz ./git-2.9.5.tar.gz && \
     cd git-2.9.5 && \
+    make configure && \
     ./configure --prefix=/usr && \
     make && \
     make install
@@ -59,8 +57,8 @@ ENV UMPIRE_VERSION 0.5.3
 RUN pip2.7 install umpire==${UMPIRE_VERSION}
 
 # Install golang 1.12
-RUN wget https://storage.googleapis.com/golang/go1.12.1.linux-amd64.tar.gz -O /tmp/go1.12.1.linux-amd64.tar.gz
-RUN sudo tar -C /usr/local -xzf /tmp/go1.12.1.linux-amd64.tar.gz
+RUN wget https://storage.googleapis.com/golang/go1.12.3.linux-amd64.tar.gz -O /tmp/go1.12.3.linux-amd64.tar.gz
+RUN sudo tar -C /usr/local -xzf /tmp/go1.12.3.linux-amd64.tar.gz
 
 #Install glide
 RUN wget https://github.com/Masterminds/glide/releases/download/v0.12.3/glide-v0.12.3-linux-amd64.tar.gz -O /tmp/glide-v0.12.3-linux-amd64.tar.gz
